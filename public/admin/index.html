@@ -296,6 +296,11 @@
                     </div>
                     <input data-f="kicker" placeholder="Kicker / label kecil di atas judul (mis. Sorotan)" value="${escapeHtml(s.kicker || '')}"
                            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <div data-hero-preview class="${s.image ? '' : 'hidden'}">
+                        <img alt="Pratinjau gambar slide" class="h-28 w-full object-cover rounded-lg border border-slate-200" src="${escapeHtml(s.image || '')}">
+                    </div>
+                    <input data-f="image" placeholder="URL gambar latar (opsional — contoh: /images/hero-1.jpg atau https://…)" value="${escapeHtml(s.image || '')}"
+                           class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                     <input data-f="title" placeholder="Judul utama slide" value="${escapeHtml(s.title || '')}"
                            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                     <textarea data-f="sub" rows="2" placeholder="Subjudul / ringkasan singkat"
@@ -324,6 +329,7 @@
                 sub:    row.querySelector('[data-f="sub"]').value,
                 cta:    row.querySelector('[data-f="cta"]').value,
                 link:   row.querySelector('[data-f="link"]').value,
+                image:  row.querySelector('[data-f="image"]').value,
             }));
         }
 
@@ -337,6 +343,16 @@
                 }
             } catch (e) { console.error('Gagal memuat hero:', e); }
         }
+
+        // Preview gambar slide berubah langsung saat URL gambar diketik
+        document.getElementById('heroRows').addEventListener('input', (e) => {
+            if (e.target.dataset.f !== 'image') return;
+            const row = e.target.closest('.hero-row');
+            const preview = row.querySelector('[data-hero-preview]');
+            const img = preview.querySelector('img');
+            img.src = e.target.value.trim();
+            preview.classList.toggle('hidden', !e.target.value.trim());
+        });
 
         // Tambah slide baru (dengan nilai default bila kolom kosong)
         document.addEventListener('click', async (e) => {

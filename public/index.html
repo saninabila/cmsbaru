@@ -131,9 +131,15 @@
             heroSlides.forEach((slide, i) => {
                 const el = document.createElement('div');
                 el.dataset.heroSlide = i;
-                el.className = `${SLIDE_STYLES[i % SLIDE_STYLES.length]} absolute inset-0 flex items-center px-8 md:px-14 py-12 transition-opacity duration-700 ${i === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`;
+                // Slide bergambar: latar foto + overlay gelap; tanpa gambar: gradien warna
+                const bg = slide.image
+                    ? `<div class="absolute inset-0 bg-cover bg-center" style="background-image:url('${escapeHtml(slide.image)}')"></div>
+                       <div class="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-900/20"></div>`
+                    : '';
+                el.className = `${slide.image ? 'bg-slate-900' : SLIDE_STYLES[i % SLIDE_STYLES.length]} absolute inset-0 flex items-center px-8 md:px-14 py-12 overflow-hidden transition-opacity duration-700 ${i === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`;
                 el.innerHTML = `
-                    <div class="max-w-xl">
+                    ${bg}
+                    <div class="relative max-w-xl">
                         <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-white/90 bg-white/15 border border-white/20 px-3 py-1 rounded-full mb-4">${escapeHtml(slide.kicker)}</span>
                         <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">${escapeHtml(slide.title)}</h2>
                         <p class="text-white/80 mt-3 leading-relaxed text-sm md:text-base">${escapeHtml(slide.sub)}</p>

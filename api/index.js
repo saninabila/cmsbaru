@@ -151,6 +151,7 @@ function sanitizeHeroSlides(slides) {
         sub: typeof s.sub === 'string' ? s.sub.trim() : '',
         cta: typeof s.cta === 'string' && s.cta.trim() ? s.cta.trim() : 'Baca selengkapnya',
         link: typeof s.link === 'string' && s.link.trim() ? s.link.trim() : '#postingan',
+        image: typeof s.image === 'string' && s.image.trim() ? s.image.trim() : '',
       };
     })
     .filter(Boolean);
