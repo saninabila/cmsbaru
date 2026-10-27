@@ -135,7 +135,62 @@ app.get('/api/posts/:id', async (req, res) => {
   }
 });
 
+// ===== API Hero Section =====
+
+function sanitizeHeroSlides(slides) {
+  if (!Array.isArray(slides)) return [];
+  return slides
+    .slice(0, 3)
+    .map(s => (s && typeof s === 'object') ? s : {})
+    .map(s => {
+      const title = typeof s.title === 'string' ? s.title.trim() : '';
+      if (!title) return null;
+      return {
+        kicker: typeof s.kicker === 'string' && s.kicker.trim() ? s.kicker.trim() : 'Sorotan',
+        title,
+        sub: typeof s.sub === 'string' ? s.sub.trim() : '',
+        cta: typeof s.cta === 'string' && s.cta.trim() ? s.cta.trim() : 'Baca selengkapnya',
+        link: typeof s.link === 'string' && s.link.trim() ? s.link.trim() : '#postingan',
+      };
+    })
+    .filter(Boolean);
+}
+
+// Publik: slide hero hasil aturan admin (kosong = fallback otomatis)
+app.get('/api/hero', async (req, res) => {
+  try {
+    const doc = await db.collection('settings').doc('hero').get();
+    const slides = doc.exists && Array.isArray(doc.data().slides) ? doc.data().slides : [];
+    res.status(200).json({ slides });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // ===== API Admin (membutuhkan login) =====
+
+app.get('/api/admin/hero', requireAdmin, async (req, res) => {
+  try {
+    const doc = await db.collection('settings').doc('hero').get();
+    const slides = doc.exists && Array.isArray(doc.data().slides) ? doc.data().slides : [];
+    res.status(200).json({ slides });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/api/admin/hero', requireAdmin, async (req, res) => {
+  const slides = sanitizeHeroSlides((req.body || {}).slides);
+  try {
+    await db.collection('settings').doc('hero').set({
+      slides,
+      updatedAt: new Date().toISOString(),
+    });
+    res.status(200).json({ slides });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.get('/api/admin/posts', requireAdmin, async (req, res) => {
   try {

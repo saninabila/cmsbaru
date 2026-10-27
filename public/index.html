@@ -175,14 +175,29 @@
         carouselEl.addEventListener('mouseenter', () => clearInterval(heroTimer));
         carouselEl.addEventListener('mouseleave', startAutoSlide);
 
+        // Slide hero berdasarkan konfigurasi admin (jika ada); null = pakai slide otomatis
+        async function fetchHeroConfig() {
+            try {
+                const res = await fetch('/api/hero');
+                if (res.ok) {
+                    const cfg = await res.json();
+                    if (Array.isArray(cfg.slides) && cfg.slides.length > 0) {
+                        return cfg.slides.map(s => ({ ...s, href: s.link || s.href || '#postingan' }));
+                    }
+                }
+            } catch (e) { /* fallback ke slide otomatis */ }
+            return null;
+        }
+
         // Ambil dan render postingan yang sudah dipublikasikan
         async function fetchPosts() {
             try {
+                const heroConfig = await fetchHeroConfig();
                 const response = await fetch('/api/posts');
                 const posts = await response.json();
                 const container = document.getElementById('postsList');
 
-                heroSlides = Array.isArray(posts) && posts.length > 0 ? slidesFromPosts(posts) : defaultSlides();
+                heroSlides = heroConfig || (Array.isArray(posts) && posts.length > 0 ? slidesFromPosts(posts) : defaultSlides());
                 renderHero();
                 startAutoSlide();
 
