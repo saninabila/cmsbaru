@@ -157,11 +157,57 @@ function sanitizeHeroSlides(slides) {
     .filter(Boolean);
 }
 
+// Ambil ID post dari link slide (contoh: /post.html?id=abc123)
+function extractPostIdFromLink(link) {
+  if (typeof link !== 'string') return null;
+  const match = link.match(/post\.html\?id=([^&#]+)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+// Sinkronkan slide hero dengan postingan yang ada di admin:
+// - slide yang menaut ke post.id diperbarui datanya (judul, ringkasan, gambar)
+//   agar selalu sama dengan isi post terkini di Firestore;
+// - slide dibuang bila post-nya sudah dihapus / tidak berstatus published;
+// - slide statis (tanpa tautan post) tetap dipertahankan apa adanya.
+async function syncHeroSlidesWithPosts(slides) {
+  const ids = [...new Set(slides
+    .map(s => extractPostIdFromLink(s.link))
+    .filter(Boolean))];
+  if (ids.length === 0) return slides;
+
+  const snaps = await Promise.all(ids.map(id => db.collection('posts').doc(id).get()));
+  const postById = new Map(ids.map((id, i) => [id, snaps[i]]));
+
+  return slides
+    .map(slide => {
+      const id = extractPostIdFromLink(slide.link);
+      if (!id) return slide;
+
+      const snap = postById.get(id);
+      if (!snap || !snap.exists) return null;
+
+      const post = snap.data();
+      if (post.status !== 'published') return null;
+
+      const content = typeof post.content === 'string' ? post.content.trim() : '';
+      return {
+        ...slide,
+        title: typeof post.title === 'string' && post.title.trim() ? post.title.trim() : slide.title,
+        sub: content ? content.slice(0, 110) + (content.length > 110 ? '…' : '') : slide.sub,
+        image: typeof post.image === 'string' && post.image.trim() ? post.image.trim() : (slide.image || ''),
+      };
+    })
+    .filter(Boolean);
+}
+
 // Publik: slide hero hasil aturan admin (kosong = fallback otomatis)
+// Slide yang menaut ke postingan disinkronkan dengan data post di Firestore,
+// sehingga hero selalu sama dengan postingan yang sudah diterbitkan di admin.
 app.get('/api/hero', async (req, res) => {
   try {
     const doc = await db.collection('settings').doc('hero').get();
-    const slides = doc.exists && Array.isArray(doc.data().slides) ? doc.data().slides : [];
+    const saved = doc.exists && Array.isArray(doc.data().slides) ? doc.data().slides : [];
+    const slides = await syncHeroSlidesWithPosts(saved);
     res.status(200).json({ slides });
   } catch (error) {
     res.status(500).json({ error: error.message });
