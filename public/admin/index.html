@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Node.js CMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <!-- ===== Halaman Login ===== -->
+    <section id="loginView" class="hidden min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+            <h1 class="text-2xl font-bold text-gray-800 mb-1">Area Admin</h1>
+            <p class="text-gray-500 text-sm mb-6">Masuk untuk mengelola postingan.</p>
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="password" required autocomplete="current-password"
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <p id="loginError" class="text-red-600 text-sm hidden"></p>
+                <button type="submit"
+                        class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">Masuk</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== Dashboard Admin ===== -->
+    <section id="dashboardView" class="hidden">
+        <div class="container mx-auto p-6 max-w-4xl">
+            <header class="mb-8 flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">Dashboard Admin</h1>
+                    <p class="text-gray-600">Kelola postingan sebelum dipublikasikan.</p>
+                </div>
+                <div class="flex gap-3">
+                    <a href="/" class="text-indigo-600 hover:underline text-sm self-center">Lihat Situs Publik</a>
+                    <button id="logoutBtn" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 text-sm transition">Keluar</button>
+                </div>
+            </header>
+
+            <!-- Form Postingan (Tambah / Edit) -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 id="formTitle" class="text-xl font-semibold mb-4 text-gray-700">Tambah Postingan Baru</h2>
+                <form id="postForm" class="space-y-4">
+                    <input type="hidden" id="postId">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Judul</label>
+                        <input type="text" id="title" required
+                               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Konten</label>
+                        <textarea id="content" rows="5" required
+                                  class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Status</label>
+                        <select id="status" class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="draft">Draft (belum publik)</option>
+                            <option value="published">Published (tampil di publik)</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-3">
+                        <button type="submit"
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Simpan</button>
+                        <button type="button" id="cancelEditBtn"
+                                class="hidden bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition">Batal Edit</button>
+                    </div>
+                    <p id="formError" class="text-red-600 text-sm hidden"></p>
+                </form>
+            </div>
+
+            <!-- Daftar Postingan -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700">Daftar Postingan</h2>
+                <div id="adminPostsList" class="space-y-4">
+                    <p class="text-gray-500">Memuat data...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const API = {
+            session:    '/api/admin/session',
+            login:      '/api/admin/login',
+            logout:     '/api/admin/logout',
+            adminPosts: '/api/admin/posts',
+        };
+
+        function escapeHtml(text) {
+            return String(text ?? '')
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        }
+
+        function showLogin() {
+            document.getElementById('loginView').classList.remove('hidden');
+            document.getElementById('dashboardView').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+            fetchAdminPosts();
+        }
+
+        // Cek sesi saat halaman dibuka
+        (async function init() {
+            try {
+                const res = await fetch(API.session);
+                const data = await res.json();
+                data.authenticated ? showDashboard() : showLogin();
+            } catch (e) {
+                showLogin();
+            }
+        })();
+
+        // ===== Login =====
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorEl = document.getElementById('loginError');
+            errorEl.classList.add('hidden');
+            try {
+                const res = await fetch(API.login, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: document.getElementById('password').value }),
+                });
+                if (res.ok) {
+                    document.getElementById('password').value = '';
+                    showDashboard();
+                } else {
+                    const data = await res.json().catch(() => ({}));
+                    errorEl.textContent = data.error || 'Gagal masuk.';
+                    errorEl.classList.remove('hidden');
+                }
+            } catch (e) {
+                errorEl.textContent = 'Terjadi kesalahan jaringan.';
+                errorEl.classList.remove('hidden');
+            }
+        });
+
+        // ===== Logout =====
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch(API.logout, { method: 'POST' });
+            document.getElementById('postForm').reset();
+            resetFormMode();
+            showLogin();
+        });
+
+        // ===== Daftar postingan (admin: semua status) =====
+        async function fetchAdminPosts() {
+            const container = document.getElementById('adminPostsList');
+            try {
+                const res = await fetch(API.adminPosts);
+                if (res.status === 401) { showLogin(); return; }
+                const posts = await res.json();
+
+                if (!Array.isArray(posts) || posts.length === 0) {
+                    container.innerHTML = '<p class="text-gray-500">Belum ada postingan.</p>';
+                    return;
+                }
+
+                container.innerHTML = posts.map(post => `
+                    <div class="border-b pb-4 mb-4">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-800">${escapeHtml(post.title)}</h3>
+                                <p class="text-gray-600 mt-1 whitespace-pre-line">${escapeHtml(String(post.content).slice(0, 160))}${String(post.content).length > 160 ? '...' : ''}</p>
+                                <span class="text-xs text-gray-400 mt-2 block">Dibuat: ${new Date(post.createdAt).toLocaleString()}</span>
+                            </div>
+                            <div class="flex flex-col items-end gap-2 shrink-0">
+                                <span class="text-xs font-semibold px-2 py-1 rounded-full ${post.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}">
+                                    ${post.status === 'published' ? 'Published' : 'Draft'}
+                                </span>
+                                <button data-action="toggle" data-id="${escapeHtml(post.id)}" data-status="${escapeHtml(post.status)}"
+                                        class="text-xs text-indigo-600 hover:underline">
+                                    ${post.status === 'published' ? 'Unpublish' : 'Publish'}
+                                </button>
+                                <button data-action="edit" data-id="${escapeHtml(post.id)}" class="text-xs text-blue-600 hover:underline">Edit</button>
+                                <button data-action="delete" data-id="${escapeHtml(post.id)}" class="text-xs text-red-600 hover:underline">Hapus</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                container.innerHTML = '<p class="text-red-600">Gagal memuat postingan.</p>';
+                console.error('Gagal memuat post:', error);
+            }
+        }
+
+                // Delegasi klik untuk tombol Publish/Unpublish, Edit, Hapus
+        document.getElementById('adminPostsList').addEventListener('click', async (e) => {
+            const btn = e.target.closest('button[data-action]');
+            if (!btn) return;
+            const { action, id, status } = btn.dataset;
+
+            if (action === 'delete' && !confirm('Hapus postingan ini?')) return;
+
+            try {
+                if (action === 'delete') {
+                    const res = await fetch(`${API.adminPosts}/${id}`, { method: 'DELETE' });
+                    if (res.ok) fetchAdminPosts();
+                } else if (action === 'toggle') {
+                    // Ambil data post lalu update statusnya
+                    const listRes = await fetch(API.adminPosts);
+                    const posts = await listRes.json();
+                    const post = posts.find(p => p.id === id);
+                    if (!post) return;
+                    const res = await fetch(`${API.adminPosts}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            title: post.title,
+                            content: post.content,
+                            status: status === 'published' ? 'draft' : 'published',
+                        }),
+                    });
+                    if (res.ok) fetchAdminPosts();
+                } else if (action === 'edit') {
+                    const listRes = await fetch(API.adminPosts);
+                    const posts = await listRes.json();
+                    const post = posts.find(p => p.id === id);
+                    if (!post) return;
+                    document.getElementById('postId').value = post.id;
+                    document.getElementById('title').value = post.title;
+                    document.getElementById('content').value = post.content;
+                    document.getElementById('status').value = post.status;
+                    document.getElementById('formTitle').textContent = 'Edit Postingan';
+                    document.getElementById('cancelEditBtn').classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan.');
+            }
+        });
+
+        // ===== Simpan (tambah / update) =====
+        document.getElementById('postForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorEl = document.getElementById('formError');
+            errorEl.classList.add('hidden');
+
+            const payload = {
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value,
+                status: document.getElementById('status').value,
+            };
+            const id = document.getElementById('postId').value;
+
+            try {
+                const res = await fetch(id ? `${API.adminPosts}/${id}` : API.adminPosts, {
+                    method: id ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                if (res.ok) {
+                    document.getElementById('postForm').reset();
+                    resetFormMode();
+                    fetchAdminPosts();
+                } else {
+                    const data = await res.json().catch(() => ({}));
+                    errorEl.textContent = data.error || 'Gagal menyimpan postingan.';
+                    errorEl.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorEl.textContent = 'Terjadi kesalahan jaringan.';
+                errorEl.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('cancelEditBtn').addEventListener('click', () => {
+            document.getElementById('postForm').reset();
+            resetFormMode();
+        });
+
+        function resetFormMode() {
+            document.getElementById('postId').value = '';
+            document.getElementById('formTitle').textContent = 'Tambah Postingan Baru';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

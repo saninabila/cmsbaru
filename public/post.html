@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postingan - Node.js CMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <div class="container mx-auto p-6 max-w-3xl">
+        <header class="mb-8">
+            <a href="/" class="text-indigo-600 hover:underline text-sm">&larr; Kembali ke Daftar Postingan</a>
+        </header>
+
+        <div id="postDetail" class="bg-white p-8 rounded-lg shadow-md">
+            <p class="text-gray-500">Memuat postingan...</p>
+        </div>
+    </div>
+
+    <script>
+        function escapeHtml(text) {
+            return String(text ?? '')
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        }
+
+        async function fetchPost() {
+            const id = new URLSearchParams(window.location.search).get('id');
+            const container = document.getElementById('postDetail');
+
+            if (!id) {
+                container.innerHTML = '<p class="text-red-600">ID postingan tidak valid.</p>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/posts/${encodeURIComponent(id)}`);
+                if (res.status === 404) {
+                    document.title = 'Tidak Ditemukan - Node.js CMS';
+                    container.innerHTML = '<p class="text-gray-600 text-center py-10">Postingan tidak ditemukan.</p>';
+                    return;
+                }
+                if (!res.ok) {
+                    container.innerHTML = '<p class="text-red-600">Gagal memuat postingan.</p>';
+                    return;
+                }
+
+                const post = await res.json();
+                document.title = `${post.title} - Node.js CMS`;
+                container.innerHTML = `
+                    <h1 class="text-3xl font-bold text-gray-800">${escapeHtml(post.title)}</h1>
+                    <span class="text-xs text-gray-400 mt-2 block">Diterbitkan: ${new Date(post.createdAt).toLocaleString()}</span>
+                    <div class="mt-6 text-gray-700 leading-relaxed whitespace-pre-line">${escapeHtml(post.content)}</div>
+                `;
+            } catch (error) {
+                console.error('Gagal memuat post:', error);
+                container.innerHTML = '<p class="text-red-600">Gagal memuat postingan.</p>';
+            }
+        }
+
+        fetchPost();
+    </script>
+</body>
+</html>
