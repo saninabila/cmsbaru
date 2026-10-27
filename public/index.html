@@ -223,18 +223,25 @@
 
                 container.innerHTML = posts.map(post => `
                     <a href="/post.html?id=${encodeURIComponent(post.id)}"
-                       class="group relative flex flex-col bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-slate-200/70 hover:-translate-y-1 hover:border-indigo-100 transition-all duration-300">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-600 mb-3">
-                            ${new Date(post.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
-                        </span>
-                        <h2 class="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">${escapeHtml(post.title)}</h2>
-                        <p class="text-slate-500 text-sm mt-2 leading-relaxed line-clamp-3">${escapeHtml(String(post.content).slice(0, 220))}</p>
-                        <span class="mt-5 text-sm font-semibold text-indigo-600 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                            Baca selengkapnya
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                            </svg>
-                        </span>
+                       class="group relative flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-200/70 hover:-translate-y-1 hover:border-indigo-100 transition-all duration-300">
+                        ${post.image ? `
+                        <div class="h-44 overflow-hidden">
+                            <img alt="Gambar postingan ${escapeHtml(post.title)}" src="${escapeHtml(post.image)}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>` : ''}
+                        <div class="p-6 flex flex-col flex-1">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-600 mb-3">
+                                ${new Date(post.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            </span>
+                            <h2 class="text-lg font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">${escapeHtml(post.title)}</h2>
+                            <p class="text-slate-500 text-sm mt-2 leading-relaxed line-clamp-3">${escapeHtml(String(post.content).slice(0, 220))}</p>
+                            <span class="mt-auto pt-5 text-sm font-semibold text-indigo-600 inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                                Baca selengkapnya
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                            </span>
+                        </div>
                     </a>
                 `).join('');
             } catch (error) {

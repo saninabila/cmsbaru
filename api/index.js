@@ -209,11 +209,12 @@ function sanitizePostInput(body) {
   const title = typeof body.title === 'string' ? body.title.trim() : '';
   const content = typeof body.content === 'string' ? body.content.trim() : '';
   const status = body.status === 'published' ? 'published' : 'draft';
+  const image = typeof body.image === 'string' ? body.image.trim() : '';
 
   if (!title) return { error: 'Judul wajib diisi.' };
   if (!content) return { error: 'Konten wajib diisi.' };
 
-  return { value: { title, content, status } };
+  return { value: { title, content, image, status } };
 }
 
 app.post('/api/admin/posts', requireAdmin, async (req, res) => {

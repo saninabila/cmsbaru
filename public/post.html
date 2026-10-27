@@ -81,6 +81,7 @@
                         ${escapeHtml(post.title)}
                     </h1>
                     <div class="mt-5 h-1.5 w-16 rounded-full bg-gradient-to-r from-indigo-500 to-violet-600"></div>
+                    ${post.image ? `<img alt="Gambar postingan ${escapeHtml(post.title)}" src="${escapeHtml(post.image)}" class="mt-8 w-full aspect-video object-cover rounded-2xl border border-slate-200">` : ''}
                     <div class="mt-8 text-slate-600 leading-[1.9] whitespace-pre-line">${escapeHtml(post.content)}</div>
                 `;
             } catch (error) {

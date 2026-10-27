@@ -101,6 +101,14 @@
                                       class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"></textarea>
                         </div>
                         <div>
+                            <label class="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Gambar (opsional)</label>
+                            <div id="postImagePreview" class="hidden mb-2">
+                                <img alt="Pratinjau gambar postingan" class="h-32 w-full object-cover rounded-xl border border-slate-200" src="">
+                            </div>
+                            <input type="text" id="image" placeholder="URL gambar — contoh: /images/post-1.jpg atau https://…"
+                                   class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
                             <label class="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Status</label>
                             <div class="grid grid-cols-2 gap-2">
                                 <label class="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600 hover:border-amber-300 has-[:checked]:border-amber-400 has-[:checked]:bg-amber-50 has-[:checked]:text-amber-700 transition">
@@ -254,6 +262,7 @@
                 container.innerHTML = posts.map(post => `
                     <div class="group border border-slate-200 rounded-xl p-4 hover:border-indigo-200 hover:shadow-md transition">
                         <div class="flex gap-4">
+                            ${post.image ? `<img alt="" class="hidden sm:block w-24 h-16 rounded-lg object-cover border border-slate-200 shrink-0" src="${escapeHtml(post.image)}">` : ''}
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <h3 class="font-bold text-slate-800 truncate">${escapeHtml(post.title)}</h3>
@@ -285,7 +294,7 @@
             }
         }
 
-        // ===== Editor Hero Section =====
+                // ===== Editor Hero Section =====
 
         function heroRowHtml(s, i) {
             return `
@@ -440,6 +449,7 @@
                     document.getElementById('postId').value = post.id;
                     document.getElementById('title').value = post.title;
                     document.getElementById('content').value = post.content;
+                    setPostImage(post.image || '');
                     (post.status === 'published' ? document.getElementById('statusPublish') : document.getElementById('statusDraft')).checked = true;
                     document.getElementById('formTitle').textContent = 'Edit Postingan';
                     document.getElementById('cancelEditBtn').classList.remove('hidden');
@@ -459,6 +469,7 @@
             const payload = {
                 title: document.getElementById('title').value,
                 content: document.getElementById('content').value,
+                image: document.getElementById('image').value,
                 status: document.querySelector('input[name="status"]:checked').value,
             };
             const id = document.getElementById('postId').value;
@@ -491,9 +502,28 @@
 
         function resetFormMode() {
             document.getElementById('postId').value = '';
+            setPostImage('');
             document.getElementById('formTitle').textContent = 'Postingan Baru';
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
+
+        // ===== Gambar postingan =====
+        setPostImage('');
+
+        function setPostImage(url) {
+            const input = document.getElementById('image');
+            input.value = url;
+            const img = document.querySelector('#postImagePreview img');
+            img.src = url;
+            document.getElementById('postImagePreview').classList.toggle('hidden', !url.trim());
+        }
+
+        document.getElementById('image').addEventListener('input', (e) => {
+            const url = e.target.value.trim();
+            const img = document.querySelector('#postImagePreview img');
+            img.src = url;
+            document.getElementById('postImagePreview').classList.toggle('hidden', !url);
+        });
     </script>
 </body>
 </html>
