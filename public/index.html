@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node.js CMS - Beranda</title>
+    <title>Sani Nabila CMS - Beranda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,8 +18,8 @@
     <nav class="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-slate-200/70">
         <div class="container mx-auto px-6 max-w-5xl h-16 flex items-center justify-between">
             <a href="/" class="flex items-center gap-2.5 group">
-                <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white grid place-items-center font-extrabold shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition">N</span>
-                <span class="font-bold text-lg tracking-tight">Node<span class="text-indigo-600">CMS</span></span>
+                <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white grid place-items-center font-extrabold shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition">S</span>
+                <span class="font-bold text-lg tracking-tight">Sani Nabila <span class="text-indigo-600">CMS</span></span>
             </a>
             <a href="/admin"
                class="text-sm font-semibold text-slate-500 hover:text-slate-800 border border-slate-200 px-4 py-2 rounded-full hover:border-slate-300 hover:bg-white transition">
@@ -30,6 +30,13 @@
 
     <!-- ===== Hero Carousel ===== -->
     <header class="container mx-auto px-6 max-w-5xl pt-8">
+        <!-- Tagline -->
+        <div class="text-center mb-6">
+            <p class="inline-block text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 bg-indigo-50 border border-indigo-100 px-4 py-1.5 rounded-full">Sani Nabila CMS</p>
+            <p class="mt-3 text-lg md:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 bg-clip-text text-transparent">
+                “Kreativitasmu Tak Terbatas, Keberanianmu Tanpa Batas”
+            </p>
+        </div>
         <div id="heroCarousel" class="relative rounded-3xl overflow-hidden shadow-xl shadow-slate-300/50 min-h-[340px] md:min-h-[400px] group">
             <!-- Slide dipasang oleh JS di sini -->
 
@@ -62,7 +69,7 @@
     <!-- ===== Footer ===== -->
     <footer class="border-t border-slate-200 bg-white">
         <div class="container mx-auto px-6 max-w-5xl py-6 flex items-center justify-between text-sm text-slate-400">
-            <span>&copy; 2026 Node CMS</span>
+            <span>&copy; 2026 Sani Nabila CMS</span>
             <span class="flex items-center gap-1.5">
                 Dibangun dengan <span class="font-semibold text-slate-500">Node.js &amp; Firestore</span>
             </span>
@@ -83,6 +90,19 @@
             'bg-gradient-to-br from-sky-600 via-cyan-600 to-teal-600',
         ];
 
+        // Gambar open source (Unsplash — bebas dipakai) sebagai pelengkap hero
+        const UNSPLASH_IMAGES = [
+            'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1499750310152-2fe1eaa8b642?q=80&w=1600&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop',
+        ];
+
+        // Slide tanpa gambar otomatis memakai foto open source
+        function fallbackImage(i) {
+            return UNSPLASH_IMAGES[i % UNSPLASH_IMAGES.length];
+        }
+
         let heroSlides = [];
         let heroIndex = 0;
         let heroTimer = null;
@@ -91,8 +111,8 @@
             return [
                 {
                     kicker: 'Selamat Datang',
-                    title: 'Nikmati artikel kami di Node CMS',
-                    sub: 'Kumpulan artikel dan informasi terbaru yang sudah diterbitkan.',
+                    title: 'Nikmati artikel kami di Sani Nabila CMS',
+                    sub: 'Kreativitasmu tak terbatas — kumpulan artikel dan informasi terbaru yang sudah diterbitkan.',
                     href: '#postingan',
                     cta: 'Jelajahi postingan',
                 },
@@ -131,12 +151,11 @@
             heroSlides.forEach((slide, i) => {
                 const el = document.createElement('div');
                 el.dataset.heroSlide = i;
-                // Slide bergambar: latar foto + overlay gelap; tanpa gambar: gradien warna
-                const bg = slide.image
-                    ? `<div class="absolute inset-0 bg-cover bg-center" style="background-image:url('${escapeHtml(slide.image)}')"></div>
-                       <div class="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-900/20"></div>`
-                    : '';
-                el.className = `${slide.image ? 'bg-slate-900' : SLIDE_STYLES[i % SLIDE_STYLES.length]} absolute inset-0 flex items-center px-8 md:px-14 py-12 overflow-hidden transition-opacity duration-700 ${i === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`;
+                // Setiap slide bergambar: foto (admin atau open source) + overlay gelap agar teks terbaca
+                const bgImg = slide.image || fallbackImage(i);
+                const bg = `<div class="absolute inset-0 bg-cover bg-center" style="background-image:url('${escapeHtml(bgImg)}')"></div>
+                       <div class="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-900/20"></div>`;
+                el.className = `bg-slate-900 absolute inset-0 flex items-center px-8 md:px-14 py-12 overflow-hidden transition-opacity duration-700 ${i === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`;
                 el.innerHTML = `
                     ${bg}
                     <div class="relative max-w-xl">

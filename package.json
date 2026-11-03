@@ -1,7 +1,7 @@
 {
-  "name": "node-cms-firestore",
+  "name": "sani-nabila-cms",
   "version": "1.0.0",
-  "description": "CMS Node.js dengan Firestore dan Vercel",
+  "description": "Sani Nabila CMS — Node.js dengan Firestore dan Vercel",
   "main": "api/index.js",
   "scripts": {
     "start": "node api/index.js",
