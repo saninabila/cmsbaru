@@ -12,43 +12,43 @@
         body { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 leading-normal tracking-normal min-h-screen">
+<body class="bg-stone-100 text-stone-800 leading-normal tracking-normal min-h-screen">
 
     <!-- ===== Halaman Login ===== -->
-    <section id="loginView" class="hidden min-h-screen bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 relative overflow-hidden">
+    <section id="loginView" class="hidden min-h-screen bg-gradient-to-br from-amber-700 via-orange-800 to-amber-950 relative overflow-hidden">
         <!-- Dekorasi latar -->
         <div class="absolute -top-24 -left-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-32 -right-16 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-16 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl"></div>
 
         <div class="relative min-h-screen flex items-center justify-center p-6">
-            <div class="bg-white/95 backdrop-blur p-8 rounded-3xl shadow-2xl shadow-purple-900/30 w-full max-w-sm">
+            <div class="bg-white/95 backdrop-blur p-8 rounded-3xl shadow-2xl shadow-amber-950/40 w-full max-w-sm">
                 <div class="flex flex-col items-center text-center mb-7">
-                    <span class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white grid place-items-center font-extrabold text-xl shadow-lg shadow-indigo-500/30 mb-4 ring-4 ring-indigo-100">S</span>
-                    <h1 class="text-2xl font-extrabold tracking-tight text-slate-900">Sani Nabila CMS</h1>
-                    <p class="text-slate-500 text-sm mt-1">Masuk untuk mengelola konten situs publik.</p>
+                    <span class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-800 text-white grid place-items-center font-extrabold text-xl shadow-lg shadow-amber-600/30 mb-4 ring-4 ring-amber-100">S</span>
+                    <h1 class="text-2xl font-extrabold tracking-tight text-stone-900">Sani Nabila CMS</h1>
+                    <p class="text-stone-500 text-sm mt-1">Masuk untuk mengelola konten situs publik.</p>
                 </div>
                 <form id="loginForm" class="space-y-4">
                     <div>
-                        <label class="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Password</label>
+                        <label class="block text-stone-600 text-xs font-bold uppercase tracking-wider mb-2">Password</label>
                         <div class="relative">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
                             </svg>
                             <input type="password" id="password" required autocomplete="current-password" placeholder="Password admin"
-                                   class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                   class="w-full pl-11 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                         </div>
                     </div>
                     <p id="loginError" class="text-red-600 text-sm bg-red-50 border border-red-100 rounded-xl px-3 py-2 hidden"></p>
                     <button type="submit"
-                            class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold py-2.5 rounded-xl hover:opacity-90 shadow-lg shadow-indigo-500/25 transition flex items-center justify-center gap-2">
+                            class="w-full bg-gradient-to-r from-amber-600 to-amber-900 text-white font-semibold py-2.5 rounded-xl hover:opacity-90 shadow-lg shadow-amber-600/25 transition flex items-center justify-center gap-2">
                         Masuk
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </button>
                 </form>
-                <p class="text-center text-xs text-slate-400 mt-6">
-                    <a href="/" class="hover:text-indigo-600 font-medium">&larr; Kembali ke situs publik</a>
+                <p class="text-center text-xs text-stone-400 mt-6">
+                    <a href="/" class="hover:text-amber-700 font-medium">&larr; Kembali ke situs publik</a>
                 </p>
             </div>
         </div>
@@ -57,18 +57,18 @@
     <!-- ===== Dashboard Admin ===== -->
     <section id="dashboardView" class="hidden min-h-screen flex flex-col">
         <!-- Topbar -->
-        <nav class="sticky top-0 z-20 bg-slate-900/95 backdrop-blur text-white">
+        <nav class="sticky top-0 z-20 bg-stone-900/95 backdrop-blur text-white">
             <div class="container mx-auto px-6 max-w-5xl h-16 flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white grid place-items-center font-extrabold shadow-lg shadow-indigo-500/25">N</span>
+                    <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-800 text-white grid place-items-center font-extrabold shadow-lg shadow-amber-600/25">S</span>
                     <div class="leading-tight">
                         <span class="font-bold">Sani Nabila CMS</span>
-                        <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Panel Admin</span>
+                        <span class="block text-[10px] uppercase tracking-widest text-stone-400 font-semibold">Panel Admin</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
                     <a href="/" target="_blank"
-                       class="text-sm font-semibold text-slate-300 hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-white/10 transition">
+                       class="text-sm font-semibold text-stone-300 hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-lg hover:bg-white/10 transition">
                         Lihat Situs
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
@@ -80,54 +80,54 @@
         </nav>
 
         <div class="container mx-auto px-6 max-w-5xl flex-1 py-10">
-            <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Kelola Postingan</h1>
-            <p class="text-slate-500 mt-1">Buat, sunting, dan terbitkan konten untuk situs publik Sani Nabila CMS.</p>
+            <h1 class="text-3xl font-extrabold tracking-tight text-stone-900">Kelola Postingan</h1>
+            <p class="text-stone-500 mt-1">Buat, sunting, dan terbitkan konten untuk situs publik Sani Nabila CMS.</p>
 
-            <div class="h-1.5 w-20 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-600 mt-3 mb-8"></div>
+            <div class="h-1.5 w-20 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-800 mt-3 mb-8"></div>
 
             <div class="grid gap-6 lg:grid-cols-5 mt-8 items-start">
                 <!-- Form Postingan (Tambah / Edit) -->
-                <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl shadow-sm p-6 lg:sticky lg:top-24">
-                    <h2 id="formTitle" class="text-lg font-bold text-slate-800">Postingan Baru</h2>
-                    <p class="text-sm text-slate-400 mb-5">Isi detail postingan lalu simpan.</p>
+                <div class="lg:col-span-2 bg-white border border-stone-200 rounded-2xl shadow-sm p-6 lg:sticky lg:top-24">
+                    <h2 id="formTitle" class="text-lg font-bold text-stone-800">Postingan Baru</h2>
+                    <p class="text-sm text-stone-400 mb-5">Isi detail postingan lalu simpan.</p>
                     <form id="postForm" class="space-y-4">
                         <input type="hidden" id="postId">
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Judul</label>
+                            <label class="block text-stone-600 text-xs font-bold uppercase tracking-wider mb-2">Judul</label>
                             <input type="text" id="title" required placeholder="Judul postingan"
-                                   class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                   class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Konten</label>
+                            <label class="block text-stone-600 text-xs font-bold uppercase tracking-wider mb-2">Konten</label>
                             <textarea id="content" rows="6" required placeholder="Tulis konten di sini…"
-                                      class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"></textarea>
+                                      class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent"></textarea>
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Gambar (opsional)</label>
+                            <label class="block text-stone-600 text-xs font-bold uppercase tracking-wider mb-2">Gambar (opsional)</label>
                             <div id="postImagePreview" class="hidden mb-2">
-                                <img alt="Pratinjau gambar postingan" class="h-32 w-full object-cover rounded-xl border border-slate-200" src="">
+                                <img alt="Pratinjau gambar postingan" class="h-32 w-full object-cover rounded-xl border border-stone-200" src="">
                             </div>
                             <input type="text" id="image" placeholder="URL gambar — contoh: /images/post-1.jpg atau https://…"
-                                   class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                   class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                         </div>
                         <div>
-                            <label class="block text-slate-600 text-xs font-bold uppercase tracking-wider mb-2">Status</label>
+                            <label class="block text-stone-600 text-xs font-bold uppercase tracking-wider mb-2">Status</label>
                             <div class="grid grid-cols-2 gap-2">
-                                <label class="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600 hover:border-amber-300 has-[:checked]:border-amber-400 has-[:checked]:bg-amber-50 has-[:checked]:text-amber-700 transition">
+                                <label class="flex items-center justify-center gap-2 cursor-pointer border border-stone-200 rounded-xl px-3 py-2.5 text-sm font-semibold text-stone-600 hover:border-amber-300 has-[:checked]:border-amber-400 has-[:checked]:bg-amber-50 has-[:checked]:text-amber-700 transition">
                                     <input type="radio" name="status" value="draft" id="statusDraft" class="accent-amber-500" checked> Draft
                                 </label>
-                                <label class="flex items-center justify-center gap-2 cursor-pointer border border-slate-200 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-600 hover:border-green-300 has-[:checked]:border-green-400 has-[:checked]:bg-green-50 has-[:checked]:text-green-700 transition">
+                                <label class="flex items-center justify-center gap-2 cursor-pointer border border-stone-200 rounded-xl px-3 py-2.5 text-sm font-semibold text-stone-600 hover:border-green-300 has-[:checked]:border-green-400 has-[:checked]:bg-green-50 has-[:checked]:text-green-700 transition">
                                     <input type="radio" name="status" value="published" id="statusPublish" class="accent-green-600"> Published
                                 </label>
                             </div>
                         </div>
                         <div class="flex gap-2">
                             <button type="submit"
-                                    class="flex-1 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold py-2.5 rounded-xl hover:opacity-90 shadow-lg shadow-indigo-500/25 transition">
+                                    class="flex-1 bg-gradient-to-r from-amber-600 to-amber-900 text-white font-semibold py-2.5 rounded-xl hover:opacity-90 shadow-lg shadow-amber-600/25 transition">
                                 Simpan
                             </button>
                             <button type="button" id="cancelEditBtn"
-                                    class="hidden px-4 py-2.5 bg-slate-100 text-slate-600 text-sm font-semibold rounded-xl hover:bg-slate-200 transition">
+                                    class="hidden px-4 py-2.5 bg-stone-100 text-stone-600 text-sm font-semibold rounded-xl hover:bg-stone-200 transition">
                                 Batal
                             </button>
                         </div>
@@ -136,30 +136,30 @@
                 </div>
 
                 <!-- Daftar Postingan -->
-                <div class="lg:col-span-3 bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+                <div class="lg:col-span-3 bg-white border border-stone-200 rounded-2xl shadow-sm p-6">
                     <div class="flex items-center justify-between mb-5">
-                        <h2 class="text-lg font-bold text-slate-800">Semua Postingan</h2>
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400" id="postsCount"></span>
+                        <h2 class="text-lg font-bold text-stone-800">Semua Postingan</h2>
+                        <span class="text-xs font-bold uppercase tracking-wider text-stone-400" id="postsCount"></span>
                     </div>
                     <div id="adminPostsList" class="space-y-3">
-                        <p class="text-slate-400 animate-pulse">Memuat data…</p>
+                        <p class="text-stone-400 animate-pulse">Memuat data…</p>
                     </div>
                 </div>
 
                 <!-- ===== Hero Section ===== -->
-                <div class="lg:col-span-3 lg:col-start-3 bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+                <div class="lg:col-span-3 lg:col-start-3 bg-white border border-stone-200 rounded-2xl shadow-sm p-6">
                     <div class="flex items-center justify-between mb-1">
-                        <h2 class="text-lg font-bold text-slate-800">Hero Section</h2>
-                        <span id="heroCount" class="text-xs font-bold uppercase tracking-wider text-slate-400"></span>
+                        <h2 class="text-lg font-bold text-stone-800">Hero Section</h2>
+                        <span id="heroCount" class="text-xs font-bold uppercase tracking-wider text-stone-400"></span>
                     </div>
-                    <p class="text-sm text-slate-400 mb-5">Atur slide yang tampil di bagian atas situs publik. Jika dibiarkan kosong, slide otomatis dari postingan terbaru yang dipakai. Maksimal 3 slide.</p>
+                    <p class="text-sm text-stone-400 mb-5">Atur slide yang tampil di bagian atas situs publik. Jika dibiarkan kosong, slide otomatis dari postingan terbaru yang dipakai. Maksimal 3 slide.</p>
                     <div id="heroRows" class="space-y-4">
-                        <p class="text-slate-400 animate-pulse">Memuat slide…</p>
+                        <p class="text-stone-400 animate-pulse">Memuat slide…</p>
                     </div>
                     <datalist id="publishedPostLinks"></datalist>
                     <div class="flex flex-wrap items-center gap-2 mt-4">
-                        <button id="heroAddBtn" class="text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl px-4 py-2 transition">+ Tambah Slide</button>
-                        <button id="heroSaveBtn" class="text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 px-5 py-2 rounded-xl hover:opacity-90 shadow-lg shadow-indigo-500/25 transition">Simpan Hero</button>
+                        <button id="heroAddBtn" class="text-sm font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-xl px-4 py-2 transition">+ Tambah Slide</button>
+                        <button id="heroSaveBtn" class="text-sm font-semibold text-white bg-gradient-to-r from-amber-600 to-amber-900 px-5 py-2 rounded-xl hover:opacity-90 shadow-lg shadow-amber-600/25 transition">Simpan Hero</button>
                         <p id="heroMsg" class="hidden text-sm font-semibold"></p>
                     </div>
                 </div>
@@ -257,37 +257,37 @@
 
                 if (!Array.isArray(posts) || posts.length === 0) {
                     container.innerHTML = `
-                        <div class="flex flex-col items-center text-center py-12 border border-dashed border-slate-300 rounded-xl">
-                            <div class="w-12 h-12 rounded-xl bg-slate-100 grid place-items-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <div class="flex flex-col items-center text-center py-12 border border-dashed border-stone-300 rounded-xl">
+                            <div class="w-12 h-12 rounded-xl bg-stone-100 grid place-items-center mb-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
                                 </svg>
                             </div>
-                            <p class="font-semibold text-slate-600 text-sm">Belum ada postingan</p>
-                            <p class="text-sm text-slate-400 mt-1">Buat postingan pertama Anda lewat form di samping.</p>
+                            <p class="font-semibold text-stone-600 text-sm">Belum ada postingan</p>
+                            <p class="text-sm text-stone-400 mt-1">Buat postingan pertama Anda lewat form di samping.</p>
                         </div>`;
                     return;
                 }
 
                 container.innerHTML = posts.map(post => `
-                    <div class="group border border-slate-200 rounded-xl p-4 hover:border-indigo-200 hover:shadow-md transition">
+                    <div class="group border border-stone-200 rounded-xl p-4 hover:border-amber-300 hover:shadow-md transition">
                         <div class="flex gap-4">
-                            ${post.image ? `<img alt="" class="hidden sm:block w-24 h-16 rounded-lg object-cover border border-slate-200 shrink-0" src="${escapeHtml(post.image)}">` : ''}
+                            ${post.image ? `<img alt="" class="hidden sm:block w-24 h-16 rounded-lg object-cover border border-stone-200 shrink-0" src="${escapeHtml(post.image)}">` : ''}
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center gap-2 flex-wrap">
-                                    <h3 class="font-bold text-slate-800 truncate">${escapeHtml(post.title)}</h3>
+                                    <h3 class="font-bold text-stone-800 truncate">${escapeHtml(post.title)}</h3>
                                     <span class="shrink-0 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${post.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">
                                         ${post.status === 'published' ? 'Published' : 'Draft'}
                                     </span>
                                 </div>
-                                <p class="text-sm text-slate-500 mt-1 line-clamp-2 leading-relaxed">${escapeHtml(String(post.content).slice(0, 180))}${String(post.content).length > 180 ? '…' : ''}</p>
-                                <span class="text-[11px] text-slate-400 mt-2 block">
+                                <p class="text-sm text-stone-500 mt-1 line-clamp-2 leading-relaxed">${escapeHtml(String(post.content).slice(0, 180))}${String(post.content).length > 180 ? '…' : ''}</p>
+                                <span class="text-[11px] text-stone-400 mt-2 block">
                                     Dibuat: ${new Date(post.createdAt).toLocaleString('id-ID')} &middot; Diperbarui: ${new Date(post.updatedAt || post.createdAt).toLocaleString('id-ID')}
                                 </span>
                             </div>
                             <div class="flex flex-col gap-1.5 shrink-0 w-24">
                                 <button data-action="edit" data-id="${escapeHtml(post.id)}"
-                                        class="text-xs font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-lg py-1.5 transition">Edit</button>
+                                        class="text-xs font-semibold text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-lg py-1.5 transition">Edit</button>
                                 <button data-action="toggle" data-id="${escapeHtml(post.id)}" data-status="${escapeHtml(post.status)}"
                                         class="text-xs font-semibold ${post.status === 'published' ? 'text-amber-600 bg-amber-50 hover:bg-amber-100' : 'text-green-700 bg-green-50 hover:bg-green-100'} rounded-lg py-1.5 transition">
                                     ${post.status === 'published' ? 'Unpublish' : 'Publish'}
@@ -308,27 +308,27 @@
 
         function heroRowHtml(s, i) {
             return `
-                <div class="hero-row border border-slate-200 rounded-xl p-4 space-y-3" data-i="${i}">
+                <div class="hero-row border border-stone-200 rounded-xl p-4 space-y-3" data-i="${i}">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Slide ${i + 1}</span>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-stone-400">Slide ${i + 1}</span>
                         <button data-hero-action="remove" data-i="${i}" class="text-xs font-semibold text-red-600 hover:underline">Hapus</button>
                     </div>
                     <input data-f="kicker" placeholder="Kicker / label kecil di atas judul (mis. Sorotan)" value="${escapeHtml(s.kicker || '')}"
-                           class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                           class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                     <div data-hero-preview class="${s.image ? '' : 'hidden'}">
-                        <img alt="Pratinjau gambar slide" class="h-28 w-full object-cover rounded-lg border border-slate-200" src="${escapeHtml(s.image || '')}">
+                        <img alt="Pratinjau gambar slide" class="h-28 w-full object-cover rounded-lg border border-stone-200" src="${escapeHtml(s.image || '')}">
                     </div>
                     <input data-f="image" placeholder="URL gambar latar (opsional — contoh: /images/hero-1.jpg atau https://…)" value="${escapeHtml(s.image || '')}"
-                           class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                           class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                     <input data-f="title" placeholder="Judul utama slide" value="${escapeHtml(s.title || '')}"
-                           class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                           class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                     <textarea data-f="sub" rows="2" placeholder="Subjudul / ringkasan singkat"
-                              class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">${escapeHtml(s.sub || '')}</textarea>
+                              class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">${escapeHtml(s.sub || '')}</textarea>
                     <div class="grid gap-3 sm:grid-cols-2">
                         <input data-f="cta" placeholder="Teks tombol (CTA)" value="${escapeHtml(s.cta || '')}"
-                               class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                               class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                         <input data-f="link" list="publishedPostLinks" placeholder="Link tujuan (pilih postingan published atau ketik manual)" value="${escapeHtml(s.link || '')}"
-                               class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                               class="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 focus:border-transparent">
                     </div>
                 </div>`;
         }
@@ -337,7 +337,7 @@
             document.getElementById('heroCount').textContent = slides.length ? `${slides.length} slide aktif` : 'otomatis';
             document.getElementById('heroRows').innerHTML = slides.length
                 ? slides.map(heroRowHtml).join('')
-                : '<p class="text-sm text-slate-400">Belum ada slide khusus — publik memakai slide otomatis dari postingan terbaru.</p>';
+                : '<p class="text-sm text-stone-400">Belum ada slide khusus — publik memakai slide otomatis dari postingan terbaru.</p>';
         }
 
         // Kumpulkan isi form editor jadi array slide
